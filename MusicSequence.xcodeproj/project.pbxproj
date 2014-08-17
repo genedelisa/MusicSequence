@@ -12,6 +12,11 @@
 		B075BE3F199F81B800CDA3AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B075BE3D199F81B800CDA3AB /* Main.storyboard */; };
 		B075BE41199F81B800CDA3AB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B075BE40199F81B800CDA3AB /* Images.xcassets */; };
 		B075BE4D199F81B800CDA3AB /* MusicSequenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B075BE4C199F81B800CDA3AB /* MusicSequenceTests.swift */; };
+		B075BE57199F81CA00CDA3AB /* MIDIFrobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B075BE56199F81CA00CDA3AB /* MIDIFrobs.swift */; };
+		B075BE59199F857D00CDA3AB /* ntbldmtn.mid in Resources */ = {isa = PBXBuildFile; fileRef = B075BE58199F857D00CDA3AB /* ntbldmtn.mid */; };
+		B075BE5B199F951E00CDA3AB /* TrackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B075BE5A199F951E00CDA3AB /* TrackTableViewController.swift */; };
+		B075BE5D19A0CB9400CDA3AB /* MIDISampler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B075BE5C19A0CB9400CDA3AB /* MIDISampler.swift */; };
+		B075BE5F19A0D6B600CDA3AB /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = B075BE5E19A0D6B600CDA3AB /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +39,11 @@
 		B075BE46199F81B800CDA3AB /* MusicSequenceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusicSequenceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B075BE4B199F81B800CDA3AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B075BE4C199F81B800CDA3AB /* MusicSequenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicSequenceTests.swift; sourceTree = "<group>"; };
+		B075BE56199F81CA00CDA3AB /* MIDIFrobs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIDIFrobs.swift; sourceTree = "<group>"; };
+		B075BE58199F857D00CDA3AB /* ntbldmtn.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = ntbldmtn.mid; sourceTree = "<group>"; };
+		B075BE5A199F951E00CDA3AB /* TrackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackTableViewController.swift; sourceTree = "<group>"; };
+		B075BE5C19A0CB9400CDA3AB /* MIDISampler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIDISampler.swift; sourceTree = "<group>"; };
+		B075BE5E19A0D6B600CDA3AB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +67,8 @@
 		B075BE2B199F81B800CDA3AB = {
 			isa = PBXGroup;
 			children = (
+				B075BE5E19A0D6B600CDA3AB /* README.md */,
+				B075BE58199F857D00CDA3AB /* ntbldmtn.mid */,
 				B075BE36199F81B800CDA3AB /* MusicSequence */,
 				B075BE49199F81B800CDA3AB /* MusicSequenceTests */,
 				B075BE35199F81B800CDA3AB /* Products */,
@@ -75,11 +87,14 @@
 		B075BE36199F81B800CDA3AB /* MusicSequence */ = {
 			isa = PBXGroup;
 			children = (
+				B075BE5C19A0CB9400CDA3AB /* MIDISampler.swift */,
 				B075BE39199F81B800CDA3AB /* AppDelegate.swift */,
 				B075BE3B199F81B800CDA3AB /* ViewController.swift */,
 				B075BE3D199F81B800CDA3AB /* Main.storyboard */,
 				B075BE40199F81B800CDA3AB /* Images.xcassets */,
 				B075BE37199F81B800CDA3AB /* Supporting Files */,
+				B075BE56199F81CA00CDA3AB /* MIDIFrobs.swift */,
+				B075BE5A199F951E00CDA3AB /* TrackTableViewController.swift */,
 			);
 			path = MusicSequence;
 			sourceTree = "<group>";
@@ -190,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B075BE3F199F81B800CDA3AB /* Main.storyboard in Resources */,
+				B075BE59199F857D00CDA3AB /* ntbldmtn.mid in Resources */,
 				B075BE41199F81B800CDA3AB /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -208,7 +224,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B075BE5F19A0D6B600CDA3AB /* README.md in Sources */,
 				B075BE3C199F81B800CDA3AB /* ViewController.swift in Sources */,
+				B075BE5B199F951E00CDA3AB /* TrackTableViewController.swift in Sources */,
+				B075BE5D19A0CB9400CDA3AB /* MIDISampler.swift in Sources */,
+				B075BE57199F81CA00CDA3AB /* MIDIFrobs.swift in Sources */,
 				B075BE3A199F81B800CDA3AB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,17 +9,27 @@
 import UIKit
 
 class ViewController: UIViewController {
-                            
+    
+    var frobs:MIDIFrobs!
+    var sampler:MIDISampler!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+      //  frobs = MIDIFrobs()
+       // frobs.setupPlayer()
+       // frobs.display()
+        sampler = MIDISampler()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    @IBAction func playMIDIFile(sender: AnyObject) {
+//        sampler.playMIDIFile()
+       // frobs.togglePlaying()
+    }
+    
 }
 
