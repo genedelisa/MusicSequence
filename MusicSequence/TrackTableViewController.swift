@@ -66,61 +66,64 @@ class TrackTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("MIDICell", forIndexPath: indexPath) as UITableViewCell
         
-        // Configure the cell...
+        var te = events[indexPath.section][indexPath.row] as TimedMIDIEvent
+        var event = te.event
+        var t = String(format: "%@%0.2f", "t: ", te.eventTimeStamp)
         
-        // horribly inefficient. cache this
-        //        var mess = frobs.getMIDINoteMessages(indexPath.section)[indexPath.row]
-        
-        var event = events[indexPath.section][indexPath.row]
         if event is MIDINoteMessage {
             var note = event as MIDINoteMessage
             var n = String(format: "%@%X", "p: ", note.note)
             var d = String(format: "%@%0.2f", "d: ", note.duration)
             var v = String(format: "%@%X", "v: ", note.velocity)
             var c = String(format: "%@%X", "c: ", note.channel)
-            cell.textLabel.text = "Note \(n) \(d) \(v) \(c)"
+            cell.textLabel.text = "\(t) Note \(n) \(d) \(v) \(c)"
         }
         
         if event is MIDIMetaEvent {
             var meta = event as MIDIMetaEvent
-            cell.textLabel.text = "meta event \(meta.metaEventType)"
+
+            cell.textLabel.text = "\(t) meta event \(meta.metaEventType) \(meta.data)"
         }
-       
+        
         if event is ExtendedNoteOnEvent {
             var e = event as ExtendedNoteOnEvent
-            cell.textLabel.text = "extended noteon \(e.duration)"
-        }
 
+            cell.textLabel.text = "\(t) extended noteon \(e.duration)"
+        }
+        
         if event is ExtendedTempoEvent {
             var e = event as ExtendedTempoEvent
-            cell.textLabel.text = "ext tempo \(e.bpm)"
-        }
 
+            cell.textLabel.text = "\(t) ext tempo \(e.bpm)"
+        }
+        
         if event is MusicEventUserData {
             var e = event as MusicEventUserData
-            cell.textLabel.text = "user event \(e.length)"
+
+            cell.textLabel.text = "\(t) user event \(e.length)"
         }
         
         if event is MIDIChannelMessage {
             var e = event as MIDIChannelMessage
-            cell.textLabel.text = "chanel message \(e.status)"
+
+            var status = String(format: "%@%X", "status: ", e.status)
+            var d1 = String(format: "%@%X", "d1: ", e.data1)
+            var d2 = String(format: "%@%X", "d2: ", e.data2)
+
+            cell.textLabel.text = "\(t) chmess \(status) \(d1) \(d2)"
         }
         if event is MIDIRawData {
             var e = event as MIDIRawData
-            cell.textLabel.text = "SysEx \(e.length)"
+            
+            cell.textLabel.text = "\(t) SysEx \(e.length)"
         }
         
         if event is ParameterEvent {
             var e = event as ParameterEvent
-            cell.textLabel.text = "au parameter \(e.parameterID)"
+            
+            cell.textLabel.text = "\(t) au parameter \(e.parameterID)"
         }
-       
-
         
-        
-//        var note = tracks[indexPath.section][indexPath.row]
-//        cell.textLabel.text = "midi note \(note.note)"
-//        println("setting cell to:  \(note.note) ")
         return cell
     }
     

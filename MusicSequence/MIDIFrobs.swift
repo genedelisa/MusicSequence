@@ -11,6 +11,12 @@ import Foundation
 import AudioToolbox
 //import AVFoundation
 
+struct TimedMIDIEvent {
+    var eventType:MusicEventType
+    var eventTimeStamp:MusicTimeStamp
+    var event:Any
+}
+
 /**
 Loads a standard MIDIfile into a MusicSequence and displays the events to stdout.
 */
@@ -299,55 +305,71 @@ class MIDIFrobs {
                 println("bad status \(status)")
             }
             
-            //TODO: save the timestamps
-            
             switch Int(eventType) {
             case kMusicEventType_MIDINoteMessage:
                 let data = UnsafePointer<MIDINoteMessage>(eventData)
                 let note = data.memory
-                results.append(note)
+                
+                var te = TimedMIDIEvent(eventType: eventType, eventTimeStamp: eventTimeStamp, event: note)
+                results.append(te)
+                
+               // results.append(note)
                 break
                 
             case kMusicEventType_ExtendedNote:
                 let data = UnsafePointer<ExtendedNoteOnEvent>(eventData)
                 let event = data.memory
-                results.append(event)
+//                results.append(event)
+                var te = TimedMIDIEvent(eventType: eventType, eventTimeStamp: eventTimeStamp, event: event)
+                results.append(te)
                 break
                 
             case kMusicEventType_ExtendedTempo:
                 let data = UnsafePointer<ExtendedTempoEvent>(eventData)
                 let event = data.memory
-                results.append(event)
+//                results.append(event)
+                var te = TimedMIDIEvent(eventType: eventType, eventTimeStamp: eventTimeStamp, event: event)
+                results.append(te)
                 break
                 
             case kMusicEventType_User:
                 let data = UnsafePointer<MusicEventUserData>(eventData)
                 let event = data.memory
-                results.append(event)
+//                results.append(event)
+                var te = TimedMIDIEvent(eventType: eventType, eventTimeStamp: eventTimeStamp, event: event)
+                results.append(te)
                 break
                 
             case kMusicEventType_Meta:
                 let data = UnsafePointer<MIDIMetaEvent>(eventData)
                 let event = data.memory
-                results.append(event)
+//                results.append(event)
+                var te = TimedMIDIEvent(eventType: eventType, eventTimeStamp: eventTimeStamp, event: event)
+                results.append(te)
                 break
                 
             case kMusicEventType_MIDIChannelMessage :
                 let data = UnsafePointer<MIDIChannelMessage>(eventData)
                 let cm = data.memory
-                results.append(cm)
+//                results.append(cm)
+                var te = TimedMIDIEvent(eventType: eventType, eventTimeStamp: eventTimeStamp, event: cm)
+                results.append(te)
                 break
                 
             case kMusicEventType_MIDIRawData :
                 let data = UnsafePointer<MIDIRawData>(eventData)
                 let raw = data.memory
-                results.append(raw)
+//                results.append(raw)
+                var te = TimedMIDIEvent(eventType: eventType, eventTimeStamp: eventTimeStamp, event: raw)
+                results.append(te)
                 break
                 
             case kMusicEventType_Parameter :
                 let data = UnsafePointer<ParameterEvent>(eventData)
                 let param = data.memory
-                results.append(param)
+//                results.append(param)
+                var te = TimedMIDIEvent(eventType: eventType, eventTimeStamp: eventTimeStamp, event: param)
+                results.append(te)
                 break
                 
             default:
