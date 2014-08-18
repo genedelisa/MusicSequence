@@ -12,7 +12,6 @@ import AudioToolbox
 class TrackTableViewController: UITableViewController {
     
     var frobs:MIDIFrobs = MIDIFrobs()
-    //    var musicSequence:MusicSequence!
     var tracks: [[MIDINoteMessage]] = []
     var events: [[Any]] = []
     
@@ -24,9 +23,6 @@ class TrackTableViewController: UITableViewController {
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-        //musicSequence = frobs.loadMIDIFile("ntbldmtn", ext: "mid")
-        
         
         println("loading tracks")
         var ntracks = frobs.getNumberOfTracks()

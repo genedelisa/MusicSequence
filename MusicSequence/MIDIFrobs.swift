@@ -29,8 +29,10 @@ class MIDIFrobs {
         musicPlayer = nil
         var status = OSStatus(noErr)
         status = NewMusicPlayer(&musicPlayer)
-        if !(status == OSStatus(noErr)) {
-            println("bad status \(status)")
+        if status != OSStatus(noErr) {
+            println("bad status \(status) creating player")
+            var nserror = NSError(domain: NSOSStatusErrorDomain, code: Int(status), userInfo: nil)
+            println("\(nserror.localizedDescription)")
         }
         
         currentMusicSequence = nil
@@ -38,26 +40,70 @@ class MIDIFrobs {
         println("init finished")
     }
     
+    func displayStatus(status:OSStatus) {
+        println("Bad status: \(status)")
+        var nserror = NSError(domain: NSOSStatusErrorDomain, code: Int(status), userInfo: nil)
+        println("\(nserror.localizedDescription)")
+        
+        switch status {
+            // ugly
+        case OSStatus(kAudioToolboxErr_InvalidSequenceType):
+            println("Invalid sequence type")
+            
+        case OSStatus(kAudioToolboxErr_TrackIndexError):
+            println("Track index error")
+            
+        case OSStatus(kAudioToolboxErr_TrackNotFound):
+            println("Track not found")
+            
+        case OSStatus(kAudioToolboxErr_EndOfTrack):
+            println("End of track")
+            
+        case OSStatus(kAudioToolboxErr_StartOfTrack):
+            println("start of track")
+            
+        case OSStatus(kAudioToolboxErr_IllegalTrackDestination):
+            println("Illegal destination")
+            
+        case OSStatus(kAudioToolboxErr_NoSequence):
+            println("No Sequence")
+            
+        case OSStatus(kAudioToolboxErr_InvalidEventType):
+            println("Invalid Event Type")
+            
+        case OSStatus(kAudioToolboxErr_InvalidPlayerState):
+            println("Invalid Player State")
+            
+        case OSStatus(kAudioToolboxErr_CannotDoInCurrentContext):
+            println("Cannot do in current context")
+            
+        default:
+            println("Something or other went wrong")
+        }
+    }
+    
+    
     func loadMIDIFile(filename:CFString, ext:CFString) -> MusicSequence {
         
-        let midiFileURL = CFBundleCopyResourceURL(CFBundleGetMainBundle(), filename, ext, nil)
+        var status = OSStatus(noErr)
         
         var musicSequence:MusicSequence = nil
-        var status = NewMusicSequence(&musicSequence)
-        if !(status == OSStatus(noErr)) {
-            println("\(__LINE__) bad status \(status)")
-            println("creating sequence")
+        status = NewMusicSequence(&musicSequence)
+        if status != OSStatus(noErr) {
+            displayStatus(status)
             return nil
         }
         
+        let midiFileURL = CFBundleCopyResourceURL(CFBundleGetMainBundle(), filename, ext, nil)
         var flags:MusicSequenceLoadFlags = MusicSequenceLoadFlags(kMusicSequenceLoadSMF_ChannelsToTracks)
         var typeid = MusicSequenceFileTypeID(kMusicSequenceFile_MIDIType)
         status = MusicSequenceFileLoad(musicSequence,
             midiFileURL,
             typeid,
             flags)
-        if !(status == OSStatus(noErr)) {
+        if status != OSStatus(noErr) {
             println("\(__LINE__) bad status \(status)")
+            displayStatus(status)
             println("loading file")
             return nil
         }
@@ -75,8 +121,8 @@ class MIDIFrobs {
     func getNumberOfTracks(musicSequence:MusicSequence) -> Int {
         var trackCount:UInt32 = 0
         var status = MusicSequenceGetTrackCount(musicSequence, &trackCount)
-        if !(status == OSStatus(noErr)) {
-            println("bad status \(status)")
+        if status != OSStatus(noErr) {
+            displayStatus(status)
             println("getting track count")
         }
         return Int(trackCount)
@@ -90,8 +136,9 @@ class MIDIFrobs {
     func getTrackN(musicSequence:MusicSequence, n:UInt32) -> MusicTrack {
         var track:MusicTrack = nil
         var status = MusicSequenceGetIndTrack(musicSequence, n, &track)
-        if !(status == OSStatus(noErr)) {
-            println("bad status \(status)")
+        if status != OSStatus(noErr) {
+            displayStatus(status)
+            
         }
         return track
     }
@@ -99,8 +146,8 @@ class MIDIFrobs {
     func getTrackN(n:Int) -> MusicTrack {
         var track:MusicTrack = nil
         var status = MusicSequenceGetIndTrack(currentMusicSequence, UInt32(n), &track)
-        if !(status == OSStatus(noErr)) {
-            println("bad status \(status)")
+        if status != OSStatus(noErr) {
+            displayStatus(status)
         }
         return track
     }
@@ -116,11 +163,11 @@ class MIDIFrobs {
         var status = OSStatus(noErr)
         status = MusicPlayerSetSequence(musicPlayer, musicSequence)
         if status != OSStatus(noErr) {
-            println("bad status \(status)")
+            displayStatus(status)
         }
         status = MusicPlayerPreroll(musicPlayer)
         if status != OSStatus(noErr) {
-            println("bad status \(status)")
+            displayStatus(status)
         }
     }
     
@@ -132,7 +179,9 @@ class MIDIFrobs {
         if playing == 0 {
             MusicPlayerStart(musicPlayer)
             if !(status == OSStatus(noErr)) {
+                
                 println("bad status \(status)")
+                displayStatus(status)
             }
         } else {
             stopPlaying()
@@ -144,6 +193,7 @@ class MIDIFrobs {
         
         MusicPlayerStop(musicPlayer)
         if !(status == OSStatus(noErr)) {
+            displayStatus(status)
             println("bad status \(status)")
         }
     }
@@ -155,8 +205,10 @@ class MIDIFrobs {
         
         var trackCount:UInt32 = 0
         status = MusicSequenceGetTrackCount(musicSequence, &trackCount)
-        if !(status == OSStatus(noErr)) {
-            println("bad status \(status)")
+        
+        if status != OSStatus(noErr) {
+            displayStatus(status)
+            
             println("in display: getting track count")
         }
         println("There are \(trackCount) tracks")
@@ -164,8 +216,10 @@ class MIDIFrobs {
         var track:MusicTrack = nil
         for var i:UInt32 = 0; i < trackCount; i++ {
             status = MusicSequenceGetIndTrack(musicSequence, i, &track)
-            if !(status == OSStatus(noErr)) {
-                println("bad status \(status)")
+            
+            if status != OSStatus(noErr) {
+                displayStatus(status)
+                
             }
             println("\n\nTrack \(i)")
             
@@ -176,7 +230,7 @@ class MIDIFrobs {
             // the size is filled in by the function
             var size:UInt32 = 0
             status = MusicTrackGetProperty(track, prop, &trackLength, &size)
-            if !(status == OSStatus(noErr)) {
+            if status != OSStatus(noErr) {
                 println("bad status \(status)")
             }
             println("track length \(trackLength)")
@@ -184,7 +238,7 @@ class MIDIFrobs {
             var loopInfo:MusicTrackLoopInfo = MusicTrackLoopInfo(loopDuration: 0,numberOfLoops: 0)
             prop = UInt32(kSequenceTrackProperty_LoopInfo)
             status = MusicTrackGetProperty(track, prop, &loopInfo, &size)
-            if !(status == OSStatus(noErr)) {
+            if status != OSStatus(noErr) {
                 println("bad status \(status)")
             }
             println("loop info \(loopInfo.loopDuration)")
@@ -204,12 +258,12 @@ class MIDIFrobs {
         var status = OSStatus(noErr)
         var numberOfEvents = 0
         status = NewMusicEventIterator(track, &iterator)
-        if !(status == OSStatus(noErr)) {
+        if status != OSStatus(noErr) {
             println("bad status \(status)")
         }
         var hasCurrentEvent:Boolean = 0
         status = MusicEventIteratorHasCurrentEvent(iterator, &hasCurrentEvent)
-        if !(status == OSStatus(noErr)) {
+        if status != OSStatus(noErr) {
             println("bad status \(status)")
         }
         var eventType:MusicEventType = 0
@@ -219,8 +273,8 @@ class MIDIFrobs {
         
         while (hasCurrentEvent != 0) {
             status = MusicEventIteratorGetEventInfo(iterator, &eventTimeStamp, &eventType, &eventData, &eventDataSize)
-            if !(status == OSStatus(noErr)) {
-                println("bad status \(status)")
+            if status != OSStatus(noErr) {
+                displayStatus(status)
             }
             numberOfEvents++
         }
@@ -240,6 +294,7 @@ class MIDIFrobs {
         var numberOfEvents = 0
         status = NewMusicEventIterator(track, &iterator)
         if status != OSStatus(noErr) {
+            displayStatus(status)
             println("bad status \(status)")
         }
         var hasCurrentEvent:Boolean = 0
@@ -301,7 +356,7 @@ class MIDIFrobs {
         var results:[Any] = []
         while (hasCurrentEvent != 0) {
             status = MusicEventIteratorGetEventInfo(iterator, &eventTimeStamp, &eventType, &eventData, &eventDataSize)
-            if !(status == OSStatus(noErr)) {
+            if status != OSStatus(noErr) {
                 println("bad status \(status)")
             }
             
@@ -313,13 +368,13 @@ class MIDIFrobs {
                 var te = TimedMIDIEvent(eventType: eventType, eventTimeStamp: eventTimeStamp, event: note)
                 results.append(te)
                 
-               // results.append(note)
+                // results.append(note)
                 break
                 
             case kMusicEventType_ExtendedNote:
                 let data = UnsafePointer<ExtendedNoteOnEvent>(eventData)
                 let event = data.memory
-//                results.append(event)
+                //                results.append(event)
                 var te = TimedMIDIEvent(eventType: eventType, eventTimeStamp: eventTimeStamp, event: event)
                 results.append(te)
                 break
@@ -327,7 +382,7 @@ class MIDIFrobs {
             case kMusicEventType_ExtendedTempo:
                 let data = UnsafePointer<ExtendedTempoEvent>(eventData)
                 let event = data.memory
-//                results.append(event)
+                //                results.append(event)
                 var te = TimedMIDIEvent(eventType: eventType, eventTimeStamp: eventTimeStamp, event: event)
                 results.append(te)
                 break
@@ -335,7 +390,7 @@ class MIDIFrobs {
             case kMusicEventType_User:
                 let data = UnsafePointer<MusicEventUserData>(eventData)
                 let event = data.memory
-//                results.append(event)
+                //                results.append(event)
                 var te = TimedMIDIEvent(eventType: eventType, eventTimeStamp: eventTimeStamp, event: event)
                 results.append(te)
                 break
@@ -343,7 +398,7 @@ class MIDIFrobs {
             case kMusicEventType_Meta:
                 let data = UnsafePointer<MIDIMetaEvent>(eventData)
                 let event = data.memory
-//                results.append(event)
+                //                results.append(event)
                 var te = TimedMIDIEvent(eventType: eventType, eventTimeStamp: eventTimeStamp, event: event)
                 results.append(te)
                 break
@@ -351,7 +406,7 @@ class MIDIFrobs {
             case kMusicEventType_MIDIChannelMessage :
                 let data = UnsafePointer<MIDIChannelMessage>(eventData)
                 let cm = data.memory
-//                results.append(cm)
+                //                results.append(cm)
                 var te = TimedMIDIEvent(eventType: eventType, eventTimeStamp: eventTimeStamp, event: cm)
                 results.append(te)
                 break
@@ -359,7 +414,7 @@ class MIDIFrobs {
             case kMusicEventType_MIDIRawData :
                 let data = UnsafePointer<MIDIRawData>(eventData)
                 let raw = data.memory
-//                results.append(raw)
+                //                results.append(raw)
                 var te = TimedMIDIEvent(eventType: eventType, eventTimeStamp: eventTimeStamp, event: raw)
                 results.append(te)
                 break
@@ -367,7 +422,7 @@ class MIDIFrobs {
             case kMusicEventType_Parameter :
                 let data = UnsafePointer<ParameterEvent>(eventData)
                 let param = data.memory
-//                results.append(param)
+                //                results.append(param)
                 var te = TimedMIDIEvent(eventType: eventType, eventTimeStamp: eventTimeStamp, event: param)
                 results.append(te)
                 break
