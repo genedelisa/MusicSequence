@@ -17,6 +17,7 @@
 		B075BE5B199F951E00CDA3AB /* TrackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B075BE5A199F951E00CDA3AB /* TrackTableViewController.swift */; };
 		B075BE5D19A0CB9400CDA3AB /* MIDISampler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B075BE5C19A0CB9400CDA3AB /* MIDISampler.swift */; };
 		B075BE5F19A0D6B600CDA3AB /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = B075BE5E19A0D6B600CDA3AB /* README.md */; };
+		B0A8D11C19A133F1002A8D67 /* MIDISequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A8D11B19A133F1002A8D67 /* MIDISequence.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		B075BE5A199F951E00CDA3AB /* TrackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackTableViewController.swift; sourceTree = "<group>"; };
 		B075BE5C19A0CB9400CDA3AB /* MIDISampler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIDISampler.swift; sourceTree = "<group>"; };
 		B075BE5E19A0D6B600CDA3AB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		B0A8D11B19A133F1002A8D67 /* MIDISequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIDISequence.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 				B075BE37199F81B800CDA3AB /* Supporting Files */,
 				B075BE56199F81CA00CDA3AB /* MIDIFrobs.swift */,
 				B075BE5A199F951E00CDA3AB /* TrackTableViewController.swift */,
+				B0A8D11B19A133F1002A8D67 /* MIDISequence.swift */,
 			);
 			path = MusicSequence;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				B075BE3C199F81B800CDA3AB /* ViewController.swift in Sources */,
 				B075BE5B199F951E00CDA3AB /* TrackTableViewController.swift in Sources */,
 				B075BE5D19A0CB9400CDA3AB /* MIDISampler.swift in Sources */,
+				B0A8D11C19A133F1002A8D67 /* MIDISequence.swift in Sources */,
 				B075BE57199F81CA00CDA3AB /* MIDIFrobs.swift in Sources */,
 				B075BE3A199F81B800CDA3AB /* AppDelegate.swift in Sources */,
 			);
@@ -417,6 +421,7 @@
 				B075BE52199F81B800CDA3AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B075BE53199F81B800CDA3AB /* Build configuration list for PBXNativeTarget "MusicSequenceTests" */ = {
 			isa = XCConfigurationList;
@@ -425,6 +430,7 @@
 				B075BE55199F81B800CDA3AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
